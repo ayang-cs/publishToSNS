@@ -1,3 +1,7 @@
+var orderIds = require('./orderIds.js')
+var config = require('./config.js')
+const env = process.argv[2]
+
 // Load the AWS SDK for Node.js
 var AWS = require('aws-sdk');
 // Set region
@@ -25,37 +29,11 @@ const publishSNSTo = ({ TopicArn, Message }) => {
 
 }
 
-/**
- * List of order ids to be sent to casestack-events-_order-confirmed
- */
 
-const orderIds = [
-    11116341,
-    11116667,
-    11117669,
-    11134981,
-    11116859,
-    11124261,
-    11135499,
-    11136756,
-    11109557,
-    11113516,
-    11117377,
-    11125541,
-    11132943,
-    11119072,
-    11125309,
-    11133716,
-    11113796,
-    11120626,
-    11122415,
-    11130124
-]
-
+const topic = 'casestack-events_order-confirmed'
 const publishMultipleOrdersToOrderConfirmed = ({ orderIds }) => {
-    const TopicArn = 'arn:aws:sns:us-west-2:410986195230:casestack-events_order-confirmed' //extrapolate account id and region later for prod
-    const results = orderIds.map((orderId, index) => {
-        
+    const TopicArn = `arn:aws:sns:${config[env].AWS.REGION}:${config[env].AWS.ACCOUNT_ID}:${topic}`
+    const results = orderIds.map((orderId) => {
         publishSNSTo({ Message: orderId.toString(), TopicArn })
     })
     return results
