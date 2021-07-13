@@ -1,6 +1,7 @@
 var orderIds = require('./orderIds.js')
 var config = require('./config.js')
 const env = process.argv[2]
+const topic = 'casestack-events_order-confirmed'
 
 // Load the AWS SDK for Node.js
 var AWS = require('aws-sdk');
@@ -29,8 +30,6 @@ const publishSNSTo = ({ TopicArn, Message }) => {
 
 }
 
-
-const topic = 'casestack-events_order-confirmed'
 const publishMultipleOrdersToOrderConfirmed = ({ orderIds }) => {
     const TopicArn = `arn:aws:sns:${config[env].AWS.REGION}:${config[env].AWS.ACCOUNT_ID}:${topic}`
     const results = orderIds.map((orderId) => {

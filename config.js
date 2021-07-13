@@ -1,8 +1,8 @@
 const config = {
     PROD: {
         AWS: {
-            ACCOUNT_ID: 0,
-            REGION: "",
+            ACCOUNT_ID: 742345837186,
+            REGION: "us-west-2",
         }
     },
     DEV: {
