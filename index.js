@@ -1,10 +1,13 @@
+// Load the AWS SDK for Node.js
+var AWS = require('aws-sdk');
 var orderIds = require('./orderIds.js')
 var config = require('./config.js')
 const env = process.argv[2]
 const topic = 'casestack-events_order-confirmed'
+const profile = config[env].AWS.PROFILE
+const credentials = new AWS.SharedIniFileCredentials({ profile });
+AWS.config.credentials = credentials;
 
-// Load the AWS SDK for Node.js
-var AWS = require('aws-sdk');
 // Set region
 AWS.config.update({region: 'us-west-2'});
 
